@@ -4,7 +4,7 @@ const suggestionsContainer = document.getElementById('suggestions');
 // Fetch articles from the JSON file
 let articles = [];
 
-fetch('../pages/data.json')
+fetch('../../pages/data.json')
   .then(response => response.json())
   .then(data => {
     articles = data; // Assign the fetched data to the articles array
