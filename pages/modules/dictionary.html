@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dictionary</title>
+  <script src="https://kit.fontawesome.com/ef2517b624.js" crossorigin="anonymous"></script>
+  <style>
+    :root {
+      --light-bg: linear-gradient(135deg, #ffffff, #e3f2fd);
+      --dark-bg: linear-gradient(135deg, #1a1a1a, #2c2c2c);
+      --light-text: #333333;
+      --dark-text: #e0e0e0;
+      --light-bubble: rgba(173, 216, 230, 0.6);
+      --dark-bubble: rgba(255, 165, 0, 0.6);
+      --primary-color: #ff7f50;
+    }
+
+    body {
+      font-family: 'Arial', sans-serif;
+      margin: 0;
+      padding: 0;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+      transition: background-color 0.3s ease, color 0.3s ease;
+      background: var(--light-bg);
+      color: var(--light-text);
+    }
+
+    .container {
+      max-width: 600px;
+      width: 100%;
+      background: rgba(255, 255, 255, 0.8);
+      border-radius: 15px;
+      padding: 25px;
+      box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+      text-align: center;
+      transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      margin-bottom: 20px;
+      letter-spacing: 2px;
+      color: var(--primary-color);
+    }
+
+    input[type="text"],
+    button {
+      padding: 12px 16px;
+      border-radius: 5px;
+      border: 1px solid #ddd;
+      outline: none;
+      transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    input[type="text"] {
+      width: 80%;
+      margin-bottom: 15px;
+    }
+
+    input[type="text"]:focus {
+      background-color: #DDDDDD;
+      box-shadow: inset 0 4px 8px rgba(0, 0, 0, 0.5);
+    }
+
+    button {
+      background-color: var(--primary-color);
+      color: #ffffff;
+      border: none;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+
+    #display {
+      margin-top: 20px;
+      padding: 20px;
+      background: rgba(240, 240, 240, 0.9);
+      border-radius: 8px;
+      text-align: left;
+    }
+
+    #display strong {
+      color: #FFA127;
+    }
+
+    #theme-toggle {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      padding: 10px 20px;
+      background-color: var(--primary-color);
+      color: #ffffff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .bubble {
+      position: absolute;
+      border-radius: 50%;
+      background-color: var(--light-bubble);
+      animation: float 8s infinite;
+      transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    @keyframes float {
+      0% {
+        transform: translateY(0);
+      }
+
+      50% {
+        transform: translateY(-200px);
+      }
+
+      100% {
+        transform: translateY(0);
+      }
+    }
+
+    /* Bubble positions and sizes */
+    .bubble:nth-child(1) {
+      top: 10%;
+      left: 20%;
+      width: 60px;
+      height: 60px;
+    }
+
+    .bubble:nth-child(2) {
+      top: 50%;
+      left: 40%;
+      width: 80px;
+      height: 80px;
+    }
+
+    .bubble:nth-child(3) {
+      top: 30%;
+      left: 60%;
+      width: 100px;
+      height: 100px;
+    }
+
+    .bubble:nth-child(4) {
+      top: 70%;
+      left: 10%;
+      width: 40px;
+      height: 40px;
+    }
+
+    .bubble:nth-child(5) {
+      top: 80%;
+      left: 70%;
+      width: 50px;
+      height: 50px;
+    }
+
+    /* Dark mode styles */
+    body.dark-mode {
+      background: var(--dark-bg);
+      color: var(--dark-text);
+    }
+
+    body.dark-mode .container {
+      background: rgba(44, 44, 44, 0.9);
+    }
+
+    body.dark-mode .bubble {
+      background-color: var(--dark-bubble);
+    }
+
+    body.dark-mode input[type="text"] {
+      width: 80%;
+      padding: 14px;
+      font-size: 1rem;
+      border: none;
+      border-radius: 5px;
+      margin-bottom: 15px;
+      outline: none;
+      background-color: #444;
+      color: #fff;
+      box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.3);
+      transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    body.dark-mode input[type="text"]:focus {
+      background-color: #555555;
+      box-shadow: inset 0 4px 8px rgba(0, 0, 0, 0.5);
+    }
+
+    body.dark-mode #display {
+      margin-top: 20px;
+      padding: 20px;
+      background-color: #3a3a3a;
+      color: #e0e0e0;
+      border-radius: 8px;
+      font-size: 1.1rem;
+      text-align: left;
+      line-height: 1.5;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+      transition: box-shadow 0.3s ease;
+    }
+
+    body.dark-mode #display strong {
+      color: #FFA127;
+    }
+    
+    #backToHome {
+  position: absolute; 
+  top: 18px;
+  left: 20px;
+  padding: 10px 20px;
+  background-color: #ff7f50; 
+  color: white;
+  border: none; 
+  border-radius: 5px;
+  font-size: 1rem;
+  cursor: pointer;
+  z-index: 100;
+}
+
+#backToHome:hover {
+  background-color: #ff6347;
+  transform: scale(1.05);
+}
+  </style>
+</head>
+
+<body>
+  <button onclick="badlaw()" id="theme-toggle">Switch to Dark Mode</button>
+  <a href="../../index.html"><button id="backToHome"><i class="fa-solid fa-house"></i></button></a>
+  <div class="container">
+    <h1>Dictionary</h1>
+    <input type="text" placeholder="Search for any word" id="input">
+    <button id="search-btn">Search</button>
+    <div id="display"></div>
+  </div>
+  <div class="bubble"></div>
+  <div class="bubble"></div>
+  <div class="bubble"></div>
+  <div class="bubble"></div>
+  <div class="bubble"></div>
+
+  <script>
+    let themeBtn = document.querySelector('#theme-toggle');
+    let body = document.body;
+
+    if (localStorage.getItem('themE') === 'dark-mode') {
+      body.classList.add('dark-mode');
+    }
+
+    let badlaw = () => {
+      body.classList.toggle("dark-mode");
+
+      if (body.classList.contains('dark-mode')) {
+        localStorage.setItem('themE', 'dark-mode');
+      } else {
+        localStorage.removeItem('themE');
+      }
+    }
+  </script>
+  <script src="../../library/word.js"></script>
+</body>
+
+</html>
