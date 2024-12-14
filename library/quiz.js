@@ -2,13 +2,14 @@ const qBox = document.querySelector('#ques')
 const optionBox = document.querySelector('.options')
 const optionBtn = document.querySelectorAll('#options button')
 const display = document.querySelector('.question')
+const choice = document.querySelector('#menu')
 
 const quiz = async () => {
   try {
-    const res = await fetch(`https://opentdb.com/api.php?amount=1&category=9&type=multiple`)
+    const res = await fetch(choice.value)
     const data = await res.json()
     const ques = (data.results[0].question)
-    let c = (data.results[0].correct_answer)
+    let c = "."+(data.results[0].correct_answer)
     let n1 = (data.results[0].incorrect_answers[0])
     let n2 = (data.results[0].incorrect_answers[1])
     let n3 = (data.results[0].incorrect_answers[2])
@@ -40,6 +41,3 @@ const quiz = async () => {
     console.log(e)
   }
 }
-
-window.onload = quiz()
-      
