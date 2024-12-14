@@ -9,7 +9,7 @@ const quiz = async () => {
     const res = await fetch(choice.value)
     const data = await res.json()
     const ques = (data.results[0].question)
-    let c = "."+(data.results[0].correct_answer)
+    let c = (data.results[0].correct_answer)
     let n1 = (data.results[0].incorrect_answers[0])
     let n2 = (data.results[0].incorrect_answers[1])
     let n3 = (data.results[0].incorrect_answers[2])
